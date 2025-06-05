@@ -1,0 +1,17 @@
+{
+  "name": "convert-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsc",
+    "package": "npm run build && zip -r lambda-deployment.zip dist/ node_modules/"
+  },
+  "keywords": [],
+  "author": "Ryo Hasegawa",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.149",
+    "typescript": "^5.8.3"
+  }
+}
