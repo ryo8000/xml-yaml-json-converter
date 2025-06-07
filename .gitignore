@@ -141,3 +141,5 @@ dist
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+lambda-deployment.zip

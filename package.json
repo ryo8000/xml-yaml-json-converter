@@ -1,17 +1,22 @@
 {
   "name": "convert-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for converting between XML, JSON, and YAML formats",
   "main": "dist/handler.js",
   "scripts": {
     "build": "tsc",
     "package": "npm run build && zip -r lambda-deployment.zip dist/ node_modules/"
   },
-  "keywords": [],
+  "keywords": ["api", "conversion", "xml", "json", "yaml", "aws", "lambda"],
   "author": "Ryo Hasegawa",
   "license": "MIT",
+  "dependencies": {
+    "fast-xml-parser": "5.2.3",
+    "js-yaml": "4.1.0"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.149",
+    "@types/js-yaml": "^4.0.9",
     "typescript": "^5.8.3"
   }
 }
