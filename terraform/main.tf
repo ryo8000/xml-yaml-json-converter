@@ -39,7 +39,7 @@ resource "aws_lambda_function" "convert_api" {
   function_name = "${var.project_name}-${var.environment}"
   role          = aws_iam_role.lambda_execution_role.arn
   handler       = "dist/handler.handler"
-  runtime       = "nodejs18.x"
+  runtime       = var.lambda_runtime
   timeout       = var.lambda_timeout
   memory_size   = var.lambda_memory
 
