@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "package": "npm run build && zip -r lambda-deployment.zip dist/ node_modules/"
+    "package": "npm run build && npm ci --omit=dev && zip -r lambda-deployment.zip dist/ node_modules/ && npm ci"
   },
   "keywords": ["api", "conversion", "xml", "json", "yaml", "aws", "lambda"],
   "author": "Ryo Hasegawa",
