@@ -16,6 +16,18 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "lambda_application_log_level" {
+  description = "Application log level for Lambda function (DEBUG, INFO, WARN, ERROR)"
+  type        = string
+  default     = "INFO"
+}
+
+variable "lambda_system_log_level" {
+  description = "System log level for Lambda function runtime (DEBUG, INFO, WARN, ERROR)"
+  type        = string
+  default     = "INFO"
+}
+
 variable "lambda_memory" {
   description = "Lambda function memory in MB"
   type        = number
