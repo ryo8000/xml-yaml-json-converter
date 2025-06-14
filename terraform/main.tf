@@ -39,9 +39,14 @@ resource "aws_lambda_function" "convert_api" {
   function_name = "${var.project_name}-${var.environment}"
   role          = aws_iam_role.lambda_execution_role.arn
   handler       = "dist/handler.handler"
-  runtime       = var.lambda_runtime
-  timeout       = var.lambda_timeout
-  memory_size   = var.lambda_memory
+  logging_config {
+    log_format            = "JSON"
+    application_log_level = var.lambda_application_log_level
+    system_log_level      = var.lambda_system_log_level
+  }
+  runtime     = var.lambda_runtime
+  timeout     = var.lambda_timeout
+  memory_size = var.lambda_memory
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_basic_execution,

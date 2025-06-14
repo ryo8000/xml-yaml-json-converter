@@ -21,6 +21,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
  */
 export const main = (event: APIGatewayProxyEvent): APIGatewayProxyResult => {
   if (event.httpMethod === 'OPTIONS') {
+    console.debug('CORS preflight request.');
     return respondSuccess('');
   }
 
@@ -36,17 +37,22 @@ export const main = (event: APIGatewayProxyEvent): APIGatewayProxyResult => {
   }
 
   if (errors.length > 0) {
+    console.debug('Client error - validation failed.');
     return respondClientError(errors.join('\n'));
   }
 
   if (!supportedFormats.includes(from as string) || !supportedFormats.includes(to as string)) {
+    console.debug('Client error - unsupported format.');
     return respondClientError('Unsupported format. Supported formats are: xml, json, yaml.');
   }
 
+  console.debug('Conversion request received.');
   try {
     const result = convert(event.body as string, from as SupportedFormat, to as SupportedFormat);
+    console.debug('Conversion completed successfully.');
     return respondSuccess(result, to);
   } catch (error) {
+    console.error('Conversion failed.');
     return respondServerError((error as Error).message);
   }
 };
