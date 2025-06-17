@@ -37,7 +37,7 @@ variable "lambda_memory" {
 variable "lambda_runtime" {
   description = "Lambda function runtime"
   type        = string
-  default     = "nodejs18.x"
+  default     = "nodejs22.x"
 }
 
 variable "lambda_timeout" {
