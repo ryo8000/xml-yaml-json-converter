@@ -4,10 +4,6 @@ set -e
 
 echo "🚀 Starting deployment process..."
 
-# Build the TypeScript code
-echo "📦 Building TypeScript..."
-npm run build
-
 # Create deployment package
 echo "📦 Creating deployment package..."
 npm run package
