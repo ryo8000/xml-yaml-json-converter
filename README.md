@@ -48,7 +48,7 @@ age: 30
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - npm
 - AWS CLI (for deployment)
 - Terraform (for infrastructure)
