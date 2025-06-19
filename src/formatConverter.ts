@@ -30,7 +30,7 @@ export const convert = (data: string, from: SupportedFormat, to: SupportedFormat
   } else if (to === 'yaml') {
     result = yaml.dump(intermediate);
   } else {
-    result = JSON.stringify(intermediate, null, 2);
+    result = JSON.stringify(intermediate);
   }
   return result;
 }

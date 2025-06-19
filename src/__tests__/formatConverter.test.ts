@@ -1,75 +1,83 @@
 import { convert } from '../formatConverter';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const readFixture = (filename: string): string => {
+  return fs.readFileSync(path.join(__dirname, 'fixtures', filename), 'utf8');
+};
 
 describe('convert', () => {
   describe('Same format conversion', () => {
     it('should return the same data when from and to formats are identical', () => {
-      const json = '{"name": "John"}';
-      const result = convert(json, 'json', 'json');
-      expect(result).toBe(json);
+      const input = readFixture('test-data.json');
+      const actual = convert(input, 'json', 'json');
+      expect(actual).toEqual(input);
     });
   });
 
   describe('XML to JSON conversion', () => {
-    it('should convert simple XML to JSON', () => {
-      const xml = '<root><name>John</name><age>30</age></root>';
-      const result = convert(xml, 'xml', 'json');
-      const parsed = JSON.parse(result);
-      expect(parsed.root.name).toBe('John');
-      expect(parsed.root.age).toBe(30);
+    it('should convert XML to JSON', () => {
+      const input = readFixture('test-data.xml');
+      const expectedJson = readFixture('expected-output.json');
+      const actual = convert(input, 'xml', 'json');
+      const parsed = JSON.parse(actual);
+      const expected = JSON.parse(expectedJson);
+      expect(parsed).toEqual(expected);
     });
   });
 
   describe('XML to YAML conversion', () => {
-    it('should convert simple XML to YAML', () => {
-      const xml = '<root><name>John</name><age>30</age></root>';
-      const result = convert(xml, 'xml', 'yaml');
-      expect(result).toContain('name: John');
-      expect(result).toContain('age: 30');
+    it('should convert XML to YAML', () => {
+      const input = readFixture('test-data.xml');
+      const expected = readFixture('xml-to-yaml-expected.yaml');
+      const actual = convert(input, 'xml', 'yaml');
+      expect(actual).toEqual(expected);
     });
   });
 
   describe('YAML to XML conversion', () => {
-    it('should convert simple YAML to XML', () => {
-      const yaml = 'name: John\nage: 30';
-      const result = convert(yaml, 'yaml', 'xml');
-      expect(result).toContain('<name>John</name>');
-      expect(result).toContain('<age>30</age>');
+    it('should convert YAML to XML', () => {
+      const input = readFixture('test-data.yaml');
+      const expected = readFixture('yaml-to-xml-expected.xml');
+      const actual = convert(input, 'yaml', 'xml');
+      expect(actual).toEqual(expected);
     });
   });
 
   describe('YAML to JSON conversion', () => {
-    it('should convert simple YAML to JSON', () => {
-      const yaml = 'name: John\nage: 30';
-      const result = convert(yaml, 'yaml', 'json');
-      const parsed = JSON.parse(result);
-      expect(parsed.name).toBe('John');
-      expect(parsed.age).toBe(30);
+    it('should convert YAML to JSON', () => {
+      const input = readFixture('test-data.yaml');
+      const expectedJson = readFixture('expected-output.json');
+      const actual = convert(input, 'yaml', 'json');
+      const parsed = JSON.parse(actual);
+      const expected = JSON.parse(expectedJson);
+      expect(parsed).toEqual(expected);
     });
   });
 
   describe('JSON to XML conversion', () => {
-    it('should convert simple JSON to XML', () => {
-      const json = '{"name": "John", "age": 30}';
-      const result = convert(json, 'json', 'xml');
-      expect(result).toContain('<name>John</name>');
-      expect(result).toContain('<age>30</age>');
+    it('should convert JSON to XML', () => {
+      const input = readFixture('test-data.json');
+      const expected = readFixture('json-to-xml-expected.xml');
+      const actual = convert(input, 'json', 'xml');
+      expect(actual).toEqual(expected);
     });
   });
 
   describe('JSON to YAML conversion', () => {
-    it('should convert simple JSON to YAML', () => {
-      const json = '{"name": "John", "age": 30}';
-      const result = convert(json, 'json', 'yaml');
-      expect(result).toContain('name: John');
-      expect(result).toContain('age: 30');
+    it('should convert JSON to YAML', () => {
+      const input = readFixture('test-data.json');
+      const expected = readFixture('json-to-yaml-expected.yaml');
+      const actual = convert(input, 'json', 'yaml');
+      expect(actual).toEqual(expected);
     });
   });
 
   describe('Error handling', () => {
-    it('should throw error for invalid JSON', () => {
-      const invalidJson = '{"name": "John"';
+    it('should throw error for invalid data', () => {
+      const input = '{"name": "John"';
       expect(() => {
-        convert(invalidJson, 'json', 'xml');
+        convert(input, 'json', 'xml');
       }).toThrow();
     });
   });
