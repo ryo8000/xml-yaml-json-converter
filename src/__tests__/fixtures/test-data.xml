@@ -1,5 +1,5 @@
 <userData>
-  <profiles>
+  <profiles id='1'>
     <name>John</name>
     <age>30</age>
     <hobbies>Reading</hobbies>
@@ -29,7 +29,7 @@
     </orders>
     <createdAt>2025-06-14T12:00:00Z</createdAt>
   </profiles>
-  <profiles>
+  <profiles id='2'>
     <name>Bob</name>
     <age>29</age>
     <hobbies>Fishing</hobbies>

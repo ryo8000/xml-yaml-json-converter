@@ -1,6 +1,7 @@
 userData:
   profiles:
-    - name: John
+    - '@_id': '1'
+      name: John
       age: 30
       hobbies:
         - Reading
@@ -24,7 +25,8 @@ userData:
           item: Pen
           quantity: 5
       createdAt: '2025-06-14T12:00:00Z'
-    - name: Bob
+    - '@_id': '2'
+      name: Bob
       age: 29
       hobbies:
         - Fishing
