@@ -2,6 +2,7 @@
   "userData": {
     "profiles": [
       {
+        "@_id": "1",
         "name": "John",
         "age": 30,
         "hobbies": [
@@ -37,6 +38,7 @@
         "createdAt": "2025-06-14T12:00:00Z"
       },
       {
+        "@_id": "2",
         "name": "Bob",
         "age": 29,
         "hobbies": [

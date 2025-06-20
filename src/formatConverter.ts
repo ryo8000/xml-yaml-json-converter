@@ -17,7 +17,11 @@ export const convert = (data: string, from: SupportedFormat, to: SupportedFormat
 
   let intermediate: unknown;
   if (from === 'xml') {
-    intermediate = new XMLParser().parse(data);
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_'
+    });
+    intermediate = parser.parse(data);
   } else if (from === 'yaml') {
     intermediate = yaml.load(data);
   } else {
@@ -26,7 +30,11 @@ export const convert = (data: string, from: SupportedFormat, to: SupportedFormat
 
   let result: string;
   if (to === 'xml') {
-    result = new XMLBuilder().build(intermediate);
+    const builder = new XMLBuilder({
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_'
+    });
+    result = builder.build(intermediate);
   } else if (to === 'yaml') {
     result = yaml.dump(intermediate);
   } else {

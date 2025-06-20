@@ -24,6 +24,7 @@ userData:
           item: Pen
           quantity: 5
       createdAt: '2025-06-14T12:00:00Z'
+      '@_id': '1'
     - name: Bob
       age: 29
       hobbies:
@@ -52,3 +53,4 @@ userData:
           item: Tripod
           quantity: 1
       createdAt: '2025-06-01T09:30:00Z'
+      '@_id': '2'
