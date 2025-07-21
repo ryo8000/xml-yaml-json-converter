@@ -16,7 +16,7 @@
     "js-yaml": "4.1.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.150",
+    "@types/aws-lambda": "^8.10.152",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
     "jest": "^30.0.4",
