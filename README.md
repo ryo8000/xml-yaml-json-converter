@@ -10,7 +10,7 @@ This project provides a serverless API that enables conversion between XML, YAML
 * **Conversion Libraries:**
   * [`fast-xml-parser`](https://github.com/NaturalIntelligence/fast-xml-parser)
   * [`js-yaml`](https://github.com/nodeca/js-yaml)
-* **Infrastructure:** AWS Lambda, API Gateway (HTTP API), Terraform
+* **Infrastructure:** AWS Lambda, API Gateway (REST API), Terraform
 
 ---
 
