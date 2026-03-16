@@ -19,7 +19,7 @@
     "@types/aws-lambda": "^8.10.161",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
-    "jest": "^30.2.0",
+    "jest": "^30.3.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   }
