@@ -4,6 +4,16 @@ This project provides a serverless API that enables conversion between XML, YAML
 
 ---
 
+## 🌐 Live Demo
+
+Try it right in your browser — no install, no sign-up, nothing uploaded. The conversion runs **entirely client-side**:
+
+**https://ryo8000.github.io/xml-yaml-json-converter/**
+
+The demo bundles the exact same `convert()` function that powers the API, so it never drifts from the API's behavior.
+
+---
+
 ## 📦 Tech Stack
 
 * **Language:** TypeScript (Node.js)
@@ -64,6 +74,16 @@ npm install
 ```bash
 npm test
 ```
+
+### Browser Demo
+
+The demo page in [`docs/`](./docs) is a static site that runs the converter fully client-side. Its logic is bundled from `web/demo.ts` with [esbuild](https://esbuild.github.io/):
+
+```bash
+npm run build:demo
+```
+
+This regenerates `docs/demo.js` locally for previewing (it's gitignored, not committed). On every push to `main`, [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) rebuilds the bundle and deploys `docs/` to GitHub Pages, so the demo can never drift out of sync with `web/demo.ts`. To enable this, set the repository's **GitHub Pages** source to **GitHub Actions** (Settings → Pages → Build and deployment).
 
 ---
 

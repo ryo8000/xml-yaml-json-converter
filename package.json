@@ -5,6 +5,7 @@
   "main": "dist/handler.js",
   "scripts": {
     "build": "tsc",
+    "build:demo": "esbuild web/demo.ts --bundle --minify --format=iife --platform=browser --target=es2019 --outfile=docs/demo.js",
     "test": "jest",
     "package": "npm run build && npm ci --omit=dev && zip -r lambda-deployment.zip dist/ node_modules/ && npm ci"
   },
@@ -19,6 +20,7 @@
     "@types/aws-lambda": "^8.10.162",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
+    "esbuild": "^0.28.1",
     "jest": "^30.4.2",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3"
