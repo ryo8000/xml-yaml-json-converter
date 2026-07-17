@@ -143,3 +143,5 @@ dist
 *.tfstate.*
 
 lambda-deployment.zip
+
+bin/
