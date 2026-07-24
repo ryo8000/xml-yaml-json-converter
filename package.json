@@ -12,7 +12,7 @@
   "author": "Ryo Hasegawa",
   "license": "MIT",
   "dependencies": {
-    "fast-xml-parser": "5.10.0",
+    "fast-xml-parser": "5.10.1",
     "js-yaml": "5.2.1"
   },
   "devDependencies": {
