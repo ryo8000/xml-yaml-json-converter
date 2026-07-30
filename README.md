@@ -44,6 +44,50 @@ age: 30
 
 ---
 
+## 🤖 MCP Server
+
+The converter is also available as an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, so AI tools such as Claude Desktop, Claude Code and Cursor can convert documents deterministically instead of rewriting them by hand.
+
+Build the standalone server executable:
+
+```bash
+npm install
+npm run build:mcp
+```
+
+This bundles everything (including the same `convert()` function that powers the API) into `bin/mcp-server.js` — no runtime dependencies required.
+
+### Claude Code
+
+```bash
+claude mcp add xml-yaml-json-converter -- node /absolute/path/to/xml-yaml-json-converter/bin/mcp-server.js
+```
+
+### Claude Desktop
+
+Add the following to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "xml-yaml-json-converter": {
+      "command": "node",
+      "args": ["/absolute/path/to/xml-yaml-json-converter/bin/mcp-server.js"]
+    }
+  }
+}
+```
+
+### Tool
+
+The server exposes a single tool:
+
+| Tool | Parameters | Description |
+| --- | --- | --- |
+| `convert_format` | `data` (string), `from` (`json` \| `xml` \| `yaml`), `to` (`json` \| `xml` \| `yaml`) | Converts `data` from the `from` format to the `to` format and returns the result as text. |
+
+---
+
 ## 🛠 Development
 
 ### Prerequisites
@@ -64,6 +108,16 @@ npm install
 ```bash
 npm test
 ```
+
+### Browser Demo
+
+The demo page in [`docs/`](./docs) is a static site that runs the converter fully client-side. Its logic is bundled from `web/demo.ts` with [esbuild](https://esbuild.github.io/):
+
+```bash
+npm run build:demo
+```
+
+This regenerates `docs/demo.js`. To publish it, enable **GitHub Pages** for the repository with the source set to the `docs/` folder on the default branch.
 
 ---
 
