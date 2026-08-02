@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML · YAML · JSON Converter</title>
+    <meta
+      name="description"
+      content="Convert between XML, YAML and JSON right in your browser. Nothing is uploaded — the conversion runs entirely client-side."
+    />
+    <!--
+      demo.js is generated from web/demo.ts with esbuild (`npm run build:demo`).
+      It bundles the same convert() function that powers the serverless API,
+      so this demo never drifts from the real conversion logic.
+    -->
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --border: #d9dee5;
+        --text: #1b1f24;
+        --muted: #5b6570;
+        --accent: #3b82f6;
+        --accent-contrast: #ffffff;
+        --error-bg: #fdecec;
+        --error-text: #b42318;
+        --field: #ffffff;
+        --shadow: 0 1px 2px rgba(16, 24, 40, 0.06),
+          0 1px 3px rgba(16, 24, 40, 0.1);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --panel: #161b22;
+          --border: #2d333b;
+          --text: #e6edf3;
+          --muted: #8b949e;
+          --accent: #58a6ff;
+          --accent-contrast: #0d1117;
+          --error-bg: #3a1d1d;
+          --error-text: #ff9a91;
+          --field: #0d1117;
+          --shadow: none;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+      }
+
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+
+      header {
+        margin-bottom: 1.75rem;
+      }
+
+      h1 {
+        margin: 0 0 0.35rem;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+      }
+
+      h1 .swirl {
+        margin-right: 0.35rem;
+      }
+
+      .tagline {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+      }
+
+      .links {
+        margin-top: 0.75rem;
+        display: flex;
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .links a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      textarea[readonly] {
+        background: var(--field);
+      }
+
+      .error {
+        margin-top: 1rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 10px;
+        background: var(--error-bg);
+        color: var(--error-text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1><span class="swirl">🌀</span>XML · YAML · JSON Converter</h1>
+        <p class="tagline">
+          Convert between XML, YAML and JSON instantly. Everything runs in your
+          browser — nothing is uploaded.
+        </p>
+        <nav class="links">
+          <a href="https://github.com/ryo8000/xml-yaml-json-converter"
+            >GitHub repository</a
+          >
+          <a
+            href="https://github.com/ryo8000/xml-yaml-json-converter#-api-usage"
+            >API usage</a
+          >
+        </nav>
+      </header>
+
+      <div class="toolbar">
+        <span class="field">
+          <label for="from">From</label>
+          <select id="from" aria-label="Source format">
+            <option value="json" selected>JSON</option>
+            <option value="yaml">YAML</option>
+            <option value="xml">XML</option>
+          </select>
+        </span>
+
+        <button id="swap" class="icon" type="button" title="Swap formats" aria-label="Swap formats">
+          ⇄
+        </button>
+
+        <span class="field">
+          <label for="to">To</label>
+          <select id="to" aria-label="Target format">
+            <option value="json">JSON</option>
+            <option value="yaml" selected>YAML</option>
+            <option value="xml">XML</option>
+          </select>
+        </span>
+
+        <span class="spacer"></span>
+
+        <button id="sample" type="button">Load sample</button>
+      </div>
+
+      <div class="panes">
+        <section class="pane">
+          <div class="pane-head">
+            <label for="input">Input</label>
+          </div>
+          <textarea
+            id="input"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            aria-label="Input data"
+          ></textarea>
+        </section>
+
+        <section class="pane">
+          <div class="pane-head">
+            <span class="label">Output</span>
+            <button id="copy" type="button">Copy</button>
+          </div>
+          <textarea
+            id="output"
+            spellcheck="false"
+            readonly
+            aria-label="Converted output"
+          ></textarea>
+        </section>
+      </div>
+
+      <div id="error" class="error" role="alert" hidden></div>
+
+      <footer>
+        Runs entirely client-side · Powered by
+        <a href="https://github.com/NaturalIntelligence/fast-xml-parser"
+          >fast-xml-parser</a
+        >
+        &amp; <a href="https://github.com/nodeca/js-yaml">js-yaml</a> · MIT
+        License
+      </footer>
+    </div>
+
+    <script src="./demo.js" defer></script>
+  </body>
+</html>
